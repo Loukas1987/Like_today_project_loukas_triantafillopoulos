@@ -72,12 +72,11 @@ line-height: 32px;
 .player_gallery .player_info .position {
 position: relative;
 overflow: hidden;
-font-size: 15px;
+font-size: 9px;
 height: 32px;
 background: #33414e;
 color: #fff;
-text-transform: uppercase;
-padding: 0 10px;
+font-weight: bold;
 }
 .player_gallery .player_info .number{background: #d61919 !important;position: relative;
 float: right;
@@ -223,6 +222,8 @@ $(document).ready(function() {
                     <li><a href="add_event.php"><span class="fa fa-pencil-square-o"></span> <span class="xn-text">Καταχώρηση Συμβάντος</span></a></li>
 					<li class="xn-title"><center><span class="fa fa-info-circle"></span>     Πληροφόρηση Χρήστη</center></li>
 					<li><a href="my_events.php"><span class="fa fa-database"></span> <span class="xn-text">Οι Καταχωρήσεις μου</span></a></li>
+					<li><a href="index_quiz.php"><span class="fa fa-trophy"></span> <span class="xn-text">Quiz Ερωτήσεων</span></a></li>
+					
                                         <li><a href="map_search_of_user.php"><span class="fa fa-map-marker"></span> <span class="xn-text">Χαρτογράφηση των καταχωρήσεών μου</span></a></li>
                                         <li class="xn-title"><center><span class="fa fa-info-circle"></span>     Πληροφόρηση κάθε Επισκέπτη</center></li>
                                         
@@ -282,7 +283,7 @@ if (isset($_SESSION['username'])) {
                                     </div>
 									<div class="panel-body">
                                     <p>Στην Σελίδα αυτή έχετε την δυνατότητα να δείτε όλους τους χρήστες που είναι εγγεγραμμένοι...</p>
-									<p>To avatar εξελίσσεται καθώς γίνεται καταχώρηση περισσότερων γεγονόντων από τον χρήστη....</p>
+									<p>To avatar εξελίσσεται καθώς γίνεται καταχώρηση περισσότερων γεγονόντων από τον χρήστη αλλά και απαντώντας σωστά σε ερωτήσεις quiz....</p>
 									<center><img src='default/images/avatars/avatars_promotion.gif' border-style='3px' title='promotion' alt='promotion' width='100px' height='140px'></center> 
 
 									</p>
@@ -322,25 +323,25 @@ if ($dnn1= mysql_fetch_array($req1)){
 	<div class="player_info1 clearfix">
         <div class="number"> ΕΞΕΛΙΞΙΜΟΤΗΤΑ AVATAR </div>
         <div class="avatar">
-		<?php if ($dnn1['count']<10){ $xp = $dnn1['count']*5; ?>
+		<?php if ($dnn['score']<30){ ?>
 <img src='default/images/avatars/epipedo_1.jpg' title='Νέος Χρήστης-Ανίδεος' alt='Νέος Χρήστης' width='50px' height='100px'>
 <?php } ?>
-<?php if ($dnn1['count']>=10 AND $dnn1['count']<30){ $xp = $dnn1['count']*8; ?>
+<?php if ($dnn['score']>=30 AND $dnn['score']<80){ ?>
 <img src='default/images/avatars/epipedo_2.jpg' title='Μαθητευόμενος' alt='Μαθητευόμενος' width='50px' height='100px'>
 <?php } ?>
-<?php if ($dnn1['count']>=30 AND $dnn1['count']<50){ $xp = $dnn1['count']*11; ?>
+<?php if ($dnn['score']>=80 AND $dnn['score']<150){ ?>
 <img src='default/images/avatars/epipedo_3.jpg' title='Γνώστης' alt='Γνώστης' width='50px' height='100px'>
 <?php } ?>
-<?php if ($dnn1['count']>=50 AND $dnn1['count']<80){ $xp = $dnn1['count']*15; ?>
+<?php if ($dnn['score']>=150 AND $dnn['score']<280){ ?>
 <img src='default/images/avatars/epipedo_4.jpg' title='Ειδικευόμενος' alt='Ειδικευόμενος' width='50px' height='100px'>
 <?php } ?>
-<?php if ($dnn1['count']>=80){ $xp = $dnn1['count']*19; ?>
+<?php if ($dnn['score']>=280){ ?>
 <img src='default/images/avatars/epipedo_5.jpg' title='Μαθουσάλας' alt='Μαθουσάλας' width='50px' height='100px'>
 <?php } ?>
 </div>
     <div class="player_info clearfix">
-        <div class="number"><i class="t-shirt"></i>XP <?php echo $xp; ?></div>
-        <div class="position">Δημοσιευσεις: <?php echo $dnn1['count']; ?>
+        <div class="number"><i class="t-shirt"></i><?php echo $dnn['score']; ?> XP</div>
+        <div class="position"><?php echo $dnn1['count']; ?> Καταχωρήσεις
 </div>
     </div>
 </li>
@@ -363,25 +364,25 @@ else {
 	<div class="player_info1 clearfix">
         <div class="number"> ΕΞΕΛΙΞΙΜΟΤΗΤΑ AVATAR </div>
         <div class="avatar">
-		<?php if ($dnn1['count']<10){ $xp = $dnn1['count']*5; ?>
+		<?php if ($dnn['score']<30){ ?>
 <img src='default/images/avatars/epipedo_1.jpg' title='Νέος Χρήστης-Ανίδεος' alt='Νέος Χρήστης' width='50px' height='100px'>
 <?php } ?>
-<?php if ($dnn1['count']>=10 AND $dnn1['count']<30){ $xp = $dnn1['count']*8; ?>
+<?php if ($dnn['score']>=30 AND $dnn['score']<80){ ?>
 <img src='default/images/avatars/epipedo_2.jpg' title='Μαθητευόμενος' alt='Μαθητευόμενος' width='50px' height='100px'>
 <?php } ?>
-<?php if ($dnn1['count']>=30 AND $dnn1['count']<50){ $xp = $dnn1['count']*11; ?>
+<?php if ($dnn['score']>=80 AND $dnn['score']<150){ ?>
 <img src='default/images/avatars/epipedo_3.jpg' title='Γνώστης' alt='Γνώστης' width='50px' height='100px'>
 <?php } ?>
-<?php if ($dnn1['count']>=50 AND $dnn1['count']<80){ $xp = $dnn1['count']*15; ?>
+<?php if ($dnn['score']>=150 AND $dnn['score']<280){ ?>
 <img src='default/images/avatars/epipedo_4.jpg' title='Ειδικευόμενος' alt='Ειδικευόμενος' width='50px' height='100px'>
 <?php } ?>
-<?php if ($dnn1['count']>=80){ $xp = $dnn1['count']*19; ?>
+<?php if ($dnn['score']>=280){ ?>
 <img src='default/images/avatars/epipedo_5.jpg' title='Μαθουσάλας' alt='Μαθουσάλας' width='50px' height='100px'>
 <?php } ?>
 </div>
 <div class="player_info clearfix">
-        <div class="number"> XP : <?php echo $xp; ?></div>
-        <div class="position">Δημοσιευσεις: 0
+        <div class="number"><?php echo $dnn['score']; ?> XP</div>
+        <div class="position">0 Καταχωρήσεις
 		
 </div>
     </div>

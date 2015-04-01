@@ -13,6 +13,59 @@ include('config.php');
         <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"/>
 <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
 
+<style>
+li.category_button {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  text-decoration: none;
+  color: #fff;
+  position: relative;
+  padding: 10px 20px;
+  margin-left: 35px;
+  background-image: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgb(37, 40, 40)), color-stop(1, #33414e) );
+}
+  .category_number{
+   content: "1";
+  width: 35px;
+  /* max-height: 29px; */
+  height: 100%;
+  position: absolute;
+  display: block;
+  padding-top: 28px;
+  top: 0px;
+  left: -36px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #FFFFFF;
+  text-shadow: 1px 1px 0px #07526e;
+  border-right: solid 1px #07526e;
+   background-image: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgb(37, 40, 40)), color-stop(1, #33414e) );
+  text-align: -webkit-center;
+  }
+  .category_name{  
+  font-family: 'Open Sans', sans-serif;
+  font-size: 15px;
+  text-decoration: none;
+  color: #fff;
+  position: relative;
+  }
+  .panel-default .panel-heading {
+  margin-bottom: 22px;
+}
+li.category_button:hover {
+  background: #3d4e5d;
+}
+.latest_shows{width:32%!important}
+  
+  @media only screen and (max-width: 1024px) {
+  .latest_shows{width:100%!important;padding-left: 0px!important;}
+  .panel-body {
+  padding-left: 0px!important;
+}
+  }
+  
+
+</style>
 
 </head>
 
@@ -113,6 +166,8 @@ $(window).bind('resize orientationchange', function() {
                     <li><a href="add_event.php"><span class="fa fa-pencil-square-o"></span> <span class="xn-text">Καταχώρηση Συμβάντος</span></a></li>
 					<li class="xn-title"><center><span class="fa fa-info-circle"></span>     Πληροφόρηση Χρήστη</center></li>
 					<li><a href="my_events.php"><span class="fa fa-database"></span> <span class="xn-text">Οι Καταχωρήσεις μου</span></a></li>
+					<li><a href="index_quiz.php"><span class="fa fa-trophy"></span> <span class="xn-text">Quiz Ερωτήσεων</span></a></li>
+					
                                         <li><a href="map_search_of_user.php"><span class="fa fa-map-marker"></span> <span class="xn-text">Χαρτογράφηση των καταχωρήσεών μου</span></a></li>
                                         <li class="xn-title"><center><span class="fa fa-info-circle"></span>     Πληροφόρηση κάθε Επισκέπτη</center></li>
                                         
@@ -179,16 +234,10 @@ while($dnn = mysql_fetch_array($req))
 {
 ?>
 <div class="latest_shows">
-<div class="left">
 
 <ul>
-      <li><a href="category.php?id=<?php echo $dnn['CATEGORY']; ?>"><?php echo $dnn['CATEGORY']; ?>: (<?php echo $dnn['count']; ?>)</a></li>
+      <li class="category_button"><a href="category.php?id=<?php echo $dnn['CATEGORY']; ?>"><div class="category_number"><?php echo $dnn['count']; ?></div><div class="category_name"><?php echo $dnn['CATEGORY']; ?></div></a></li>
  </ul>
-
-
-
-</div><!-- left -->
-
 </div>
                              
 <?php

@@ -199,26 +199,126 @@ $(window).bind('resize orientationchange', function() {
 		                                         $dnn = mysql_fetch_array($dn);
 		                                         //WE DISPLAY EVENT DATAS
                                         ?>
+										
+                                                                            <div class="message">Τα δεδομένα σας έχουν ενημερωθεί επιτυχώς. Πρέπει ωστόσο να συνδεθείτε ξανά.<br />
+                                                                            <a href="connexion.php">Σύνδεση</a></div>
+                                                                            <?php
+                                                                         
+                        $name = htmlentities($dnn['TITLE_EVENT'], ENT_QUOTES, 'UTF-8');
+						$lastname = htmlentities($dnn['CATEGORY'], ENT_QUOTES, 'UTF-8');
+						$occupation = htmlentities($dnn['DAY'], ENT_QUOTES, 'UTF-8');
+						$bio = htmlentities($dnn['MONTH'], ENT_QUOTES, 'UTF-8');
+						$username = htmlentities($dnn['YEAR'], ENT_QUOTES, 'UTF-8');
+                        $password = htmlentities($dnn['PLACE'], ENT_QUOTES, 'UTF-8');
+                        $email = htmlentities($dnn['DESCRIPTION'], ENT_QUOTES, 'UTF-8');
+						$image_src = htmlentities($dnn['IMAGE_SRC'], ENT_QUOTES, 'UTF-8');
+                        $avatar = htmlentities($dnn['VIEWS'], ENT_QUOTES, 'UTF-8');
+    }
+    //We display the form
+?>
                                         <h3 class="panel-title"><strong>Καταγεγραμμένο Γεγονός - <?php echo htmlentities($dnn['TITLE_EVENT'], ENT_QUOTES, 'UTF-8'); ?> </h3>
                                         </div><!-- END: DIV.PANEL-HEADING -->  
 								</div><!-- END: DIV.PANEL-BODY -->  
-								<div class="panel-body">
-                                              <div class="col-lg-3 col-md-3">
-									                  <div class="well well-sm white">
-										                    <div class="profile-pic">
-											                <?php
-                                                            if($dnn['IMAGE_SRC']!='')
-                                                            {
-	                                                        echo '<img src="'.htmlentities($dnn['IMAGE_SRC'], ENT_QUOTES, 'UTF-8').'" class="img-responsive" alt="EVENT" />';
-                                                            }
-                                                            else
-                                                           {
-	                                                       echo '<img src="upload/default.png" class="img-responsive" alt="EVENT" />';
-                                                           }
-                                                           ?>
-										                   </div><!-- END: DIV.PROFILE-PIC --> 
-								       				  </div><!-- END: DIV.well well-sm white--> 
-								              </div><!-- END: DIV.col-lg-3 col-md-3-->
+							
+											<div class="panel-body">
+                                             <form class="form-group" action="edit_infos.php" method="post">
+	   <div class="form-horizontal">
+       	    <div class="form-group">
+            <label class="col-md-3 col-xs-12 control-label" for="name">Όνομα</label>
+			<div class="col-md-6 col-xs-12">
+			<div class="input-group">
+			<input type="text" name="name" id="name" value="<?php echo $name; ?>" class="form-control" />
+			</div><!-- END: DIV.FORM-GROUP --> 
+			</div><!-- END: DIV.col-md-6 col-xs-12 --> 
+			</div><!-- END: DIV.INPUT-GROUP --> 
+			<div class="form-group">
+            <label class="col-md-3 col-xs-12 control-label" for="lastname">Επώνυμο</label>
+			<div class="col-md-6 col-xs-12">
+			<div class="input-group">
+			<input type="text" name="lastname" id="lastname" value="<?php echo $lastname; ?>" class="form-control" />
+			</div><!-- END: DIV.FORM-GROUP --> 
+			</div><!-- END: DIV.col-md-6 col-xs-12 --> 
+			</div><!-- END: DIV.INPUT-GROUP --> 
+			<div class="form-group">
+            <label class="col-md-3 col-xs-12 control-label" for="occupation">Επάγγελμα</label>
+			<div class="col-md-6 col-xs-12">
+			<div class="input-group">
+			<input type="text" name="occupation" id="occupation" value="<?php echo $occupation; ?>" class="form-control" />
+			</div><!-- END: DIV.FORM-GROUP --> 
+			</div><!-- END: DIV.col-md-6 col-xs-12 --> 
+			</div><!-- END: DIV.INPUT-GROUP --> 
+			<div class="form-group">
+            <label class="col-md-3 col-xs-12 control-label" for="bio">Βιογραφικό</label>
+			<div class="col-md-6 col-xs-12">
+			<div class="input-group">
+			<input type="text" name="bio" id="bio" value="<?php echo $bio; ?>" class="form-control" />
+			</div><!-- END: DIV.FORM-GROUP --> 
+			</div><!-- END: DIV.col-md-6 col-xs-12 --> 
+			</div><!-- END: DIV.INPUT-GROUP --> 
+			 <div class="form-group">
+            <label class="col-md-3 col-xs-12 control-label" for="username">Όνομα Χρήστη</label>
+			<div class="col-md-6 col-xs-12">
+			<div class="input-group">
+			<input type="text" name="username" id="username" value="<?php echo $username; ?>" class="form-control" />
+			</div><!-- END: DIV.FORM-GROUP --> 
+			</div><!-- END: DIV.col-md-6 col-xs-12 --> 
+			</div><!-- END: DIV.INPUT-GROUP --> 
+			<div class="form-group">
+            <label class="col-md-3 col-xs-12 control-label" for="password">Κωδικός Πρόσβασης<span class="small">(6 χαρακτήρες τουλάχιστον)</span></label>
+			<div class="col-md-6 col-xs-12">
+			<div class="input-group">
+			<input class="form-control" type="password" name="password" id="password" value="<?php echo $password; ?>" />
+			</div><!-- END: DIV.FORM-GROUP --> 
+			</div><!-- END: DIV.col-md-6 col-xs-12 --> 
+			</div><!-- END: DIV.INPUT-GROUP --> 
+            <div class="form-group">			
+            <label class="col-md-3 col-xs-12 control-label" for="passverif">Κωδικός Πρόσβασης<span class="small">(επιβεβαίωση)</span></label>
+			<div class="col-md-6 col-xs-12">
+			<div class="input-group">
+			<input class="form-control" type="password" name="passverif" id="passverif" value="<?php echo $password; ?>" />
+			</div><!-- END: DIV.FORM-GROUP --> 
+			</div><!-- END: DIV.col-md-6 col-xs-12 --> 
+			</div><!-- END: DIV.INPUT-GROUP --> 
+            <div class="form-group">
+			<label class="col-md-3 col-xs-12 control-label" for="email">Email</label>
+			<div class="col-md-6 col-xs-12">
+			<div class="input-group">
+			<input type="text" class="form-control" name="email" id="email" value="<?php echo $email; ?>" />
+			</div><!-- END: DIV.FORM-GROUP --> 
+			</div><!-- END: DIV.col-md-6 col-xs-12 --> 
+			</div><!-- END: DIV.INPUT-GROUP --> 
+            <div class="form-group">
+            <label class="col-md-3 col-xs-12 control-label" for="avatar">Avatar</label>
+			<div class="col-md-6 col-xs-12">
+			<div class="input-group">
+            <input type="text" class="form-control" name="avatar" id="file" value="<?php echo $avatar; ?>" />
+			</div><!-- END: DIV.FORM-GROUP --> 
+			</div><!-- END: DIV.col-md-6 col-xs-12 --> 
+			</div><!-- END: DIV.INPUT-GROUP --> 
+			<div class="form-group">
+            <label class="col-md-3 col-xs-12 control-label" for="image_src">Εικόνα Προφίλ</label>
+			<div class="col-md-6 col-xs-12">
+			<div class="input-group">
+            <input type="text" class="form-control" name="image_src" id="file" value="<?php echo $image_src; ?>" />
+			</div><!-- END: DIV.FORM-GROUP --> 
+			</div><!-- END: DIV.col-md-6 col-xs-12 --> 
+			</div><!-- END: DIV.INPUT-GROUP --> 
+			<div class="form-group">
+			<label class="col-md-3 col-xs-12 control-label" for="image_src">Προεπισκόπηση Εικόνας Προφίλ</label>
+			<div class="col-md-6 col-xs-12">
+			<div class="input-group">
+			<img src="<?php echo $image_src; ?>" width="300px" height="500px" />
+			</div><!-- END: DIV.FORM-GROUP --> 
+			</div><!-- END: DIV.col-md-6 col-xs-12 --> 
+			</div><!-- END: DIV.INPUT-GROUP --> 
+			</div><!-- END: DIV.FORM-HORIZONTAL --> 
+			<br></br>
+			<div class="panel-footer">
+	        <input type="submit" value="Αποθήκευση" />
+            </div><!-- END: DIV.PANEL-FOOTER--> 
+              </div><!-- END: DIV.PANEL-BODY--> 
+             </form>
+ 
                                               <div class="col-lg-9 col-md-9">
 									                 <div class="tc-tabs">
 										             <ul class="nav nav-tabs tab-lg-button tab-color-dark background-dark white">
@@ -265,18 +365,7 @@ $(window).bind('resize orientationchange', function() {
 									                  </div><!-- END: DIV.tab-content-->
 									              </div><!-- END: DIV.tc-tabs--> 
 								              </div><!-- END: DIV.col-lg-9 col-md-9 --> 
-                                              <?php
-	                                             }
-	                                             else
-	                                             {
-		                                         echo 'Αυτό το γεγονός δεν είναι καταχωρημένο.';
-	                                             }
-                                               }
-                                               else
-                                               {
-	                                           echo 'Το ID του γεγονόντος αυτού δεν προσδιορίζεται.';
-                                               }
-                                             ?>
+                                             
 		                        </div><!-- END: DIV.PANEL-BODY--> 
                          </div><!-- END: DIV.panel panel-default -->  
 				</div><!-- END: DIV.FORM-HORIZONTAL -->  

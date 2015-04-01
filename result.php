@@ -2,7 +2,11 @@
 include('config.php');
 ?>
 <!DOCTYPE html>
-
+<?php if(isset($_SESSION['username']))
+							  {
+							  $user = $_SESSION['username'];
+							    } 
+							  ?>
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
 <title>Σαν Σήμερα</title>
@@ -12,6 +16,26 @@ include('config.php');
         <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
 
 <style>
+.btn-success:hover, .btn-success:focus, .btn-success.focus, .btn-success:active, .btn-success.active, .open>.dropdown-toggle.btn-success,.btn-success{
+-webkit-appearance: button;
+cursor: pointer;
+background-color: hsl(209, 21%, 25%);
+border-color: hsl(209, 21%, 25%);
+font-size: 12px;
+padding: 4px 15px;
+line-height: 20px;
+font-weight: 400;
+-moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+border-radius: 5px;
+-webkit-transition: all 200ms ease;
+-moz-transition: all 200ms ease;
+-ms-transition: all 200ms ease;
+-o-transition: all 200ms ease;
+transition: all 200ms ease;
+color: hsl(0, 100%, 100%);
+
+}
 .portlet {
 margin-bottom: 15px;
 border: none;
@@ -21,7 +45,19 @@ width: 100%;
 .col-lg-8.col-md-8.col-sm-6.col-xs-12 {
 width: 100%;
 }
+i.fa.fa-check {
+  color: rgb(6, 245, 45);
+}
+i.fa.fa-times,i.fa.fa-check,i.fa.fa-question-circle {
+  font-size: x-large;
+}
+i.fa.fa-times {
+  color: red;
+}
 
+span.result_number {
+  font-size: x-large;
+}
 </style>
 
 </head>
@@ -53,13 +89,12 @@ $(window).bind('resize orientationchange', function() {
    $keys=array_keys($_POST);
    $order=join(",",$keys);
 
-   $query="select ID_EVENT,YEAR from event where ID_EVENT IN($order) ORDER BY FIELD(ID_EVENT,$order)";
-  echo $query;
+   // $query="select *  from event where ID_EVENT IN($order) ORDER BY FIELD(ID_EVENT,$order)";
 
-   $response=mysql_query("select ID_EVENT,YEAR from event where ID_EVENT IN($order) ORDER BY FIELD(ID_EVENT,$order)")   or die(mysql_error());
+   $response=mysql_query("select ID_EVENT,YEAR from event where ID_EVENT IN($order) ORDER BY FIELD(YEAR,$order)")   or die(mysql_error());
 
    while($result=mysql_fetch_array($response)){
-       if($result['ID_EVENT']== 95){
+       if($result['YEAR']==$_POST[$result['ID_EVENT']]){
                $right_answer++;
            }else if($_POST[$result['ID_EVENT']]==5){
                $unanswered++;
@@ -68,6 +103,9 @@ $(window).bind('resize orientationchange', function() {
                $wrong_answer++;
            }
    } 
+   
+      mysql_query("update users set score=score+(5*'$right_answer') where username='$user'");
+
    ?>
 <div class="page-container">
 <div class="page-sidebar">
@@ -146,6 +184,8 @@ $(window).bind('resize orientationchange', function() {
                     <li><a href="add_event.php"><span class="fa fa-pencil-square-o"></span> <span class="xn-text">Καταχώρηση Συμβάντος</span></a></li>
 					<li class="xn-title"><center><span class="fa fa-info-circle"></span>     Πληροφόρηση Χρήστη</center></li>
 					<li><a href="my_events.php"><span class="fa fa-database"></span> <span class="xn-text">Οι Καταχωρήσεις μου</span></a></li>
+					<li><a href="index_quiz.php"><span class="fa fa-trophy"></span> <span class="xn-text">Quiz Ερωτήσεων</span></a></li>
+					
                                         <li><a href="map_search_of_user.php"><span class="fa fa-map-marker"></span> <span class="xn-text">Χαρτογράφηση των καταχωρήσεών μου</span></a></li>
                                         <li class="xn-title"><center><span class="fa fa-info-circle"></span>     Πληροφόρηση κάθε Επισκέπτη</center></li>
                                        
@@ -206,38 +246,84 @@ $(window).bind('resize orientationchange', function() {
 				<div class="form-horizontal">
 			            <div class="panel panel-default">
 			                   <div class="panel-body">
-							    <div class="container result">
-            <div class="row"> 
-                    <div class='result-logo'>
-                            <img src="image/Quiz_result.png" class="img-responsive"/>
-                    </div>    
-           </div>  
-           <hr>   
-           <div class="row"> 
-                  <div class="col-xs-18 col-sm-9 col-lg-9"> 
-                    <div class='result-logo1'>
-                            <?php while($result=mysql_fetch_assoc($response)){
-      echo $result;
-} ?>
-                    </div>
-                  </div>
-
-                  <div class="col-xs-6 col-sm-3 col-lg-3"> 
-                     <a href="index_quiz.php" class='btn btn-success'>Κάντε ένα νέο τεστ!!!</a>                   
+                                   <?php
+                                      //We check if the users ID is defined
+                                      
+	                       
+	                                 //We check if the user exists
+                                     //CONDITION TO COUNT VIEWS WHEN PAGE LOAD
+									 $user = $_SESSION['username'];
+						
+									 $dn = mysql_query("select * from users where username='$user'");
+	                                       if(mysql_num_rows($dn)>0)
+	                                       {
+		                                   $dnn = mysql_fetch_array($dn);
+		                                   //We display the user datas
+								     ?>							   
+                                  <div class="col-lg-3 col-md-3">
+                                         <div class="well well-sm white">
+										        <div class="profile-pic">
+										        <?php
+                                                if($dnn['image_src']!='')
+                                                {
+	                                            echo '<img src="'.htmlentities($dnn['image_src'], ENT_QUOTES, 'UTF-8').'" class="img-responsive" alt="Avatar" />';
+                                                }
+                                                else
+                                                {
+	                                            echo '<img src="upload/default.png" class="img-responsive" alt="Avatar" />';
+                                                }
+                                                ?>
+										        </div><!-- END: DIV.PROFILE-PIC -->
+									        </div><!-- END: DIV.well well-sm white -->
+									      <?php } ?>
+								     </div><!-- END: DIV.col-lg-3 col-md-3 -->
+									 <div class="col-lg-9 col-md-9">
+									       <div class="tc-tabs">
+										    <ul class="nav nav-tabs tab-lg-button tab-color-dark background-dark white">
+											<li class="active"><a href="#p1" data-toggle="tab"><i class="fa fa-desktop bigger-130"></i> Αποτέλεσμα Quiz - <?php echo htmlentities($dnn['username'], ENT_QUOTES, 'UTF-8'); ?></a></li>
+											</ul>
+										        <div class="tab-content">
+											           <div class="tab-pane fade in active" id="p1">
+												              <div class="row">													
+													               <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12">
+														                   <div class="portlet no-border">
+															                     <div class="portlet-heading">
+																                      <div class="portlet-title">
+																	                  <h2>Ανάλυση Απαντήσεων</h2>
+																                      </div><!-- END: DIV.PORTLET-TITLE -->
+																                      <div class="clearfix"></div>
+															                     </div><!-- END: DIV.PORTLET-HEADING -->
+															                     <div class="portlet-body">
+																                      <div class="editable editable-click" id="profile">
+																					  <br></br>
+																	                   <i class="fa fa-check"></i><span class="result_number"> <?php echo $right_answer;?></span>
+                                                                                      <i class="fa fa-times"></i><span class="result_number"><?php echo $wrong_answer;?></span>
+                                                                                      <i class="fa fa-question-circle"></i><span class="result_number"> <?php echo $unanswered;?></span>
+                                                                    	              </div><!-- END: DIV.editable editable-click -->
+																					  <div class="portlet-heading">
+																					  <div class="portlet-title"><h2>Κερδισμένοι Πόντοι</h2>
+																					  </div></div>
+																					  <br /><br />
+																					 Συγκεντρώσατε: <span class="result_number"> <?php echo 5*$right_answer.' xp' ?></span>
+																					  
+																                      <br /><br />
+																                      
+																                      <ul class="list-inline well well-sm">
+																	                  <a href="index_quiz.php" class='btn btn-success'>Κάντε ένα νέο τεστ!!!</a>                   
                     
-                       <div style="margin-top: 30%">
-                        <p>Σύνολο σωστών απαντήσεων : <span class="answer"><?php echo $right_answer;?></span></p>
-                        <p>Σύνολο λανθασμένων απαντήσεων : <span class="answer"><?php echo $wrong_answer;?></span></p>
-                        <p>Σύνολο αναπάντητων ερωτήσεων : <span class="answer"><?php echo $unanswered;?></span></p>                   
-                       </div> 
-
-                   </div>
-
-            </div>    
-            <div class="row">    
-
-            </div>
-        </div>
+					</ul>
+															                     </div><!-- END: DIV.PORTLET-BODY -->
+														                    </div><!-- END: DIV.PORTLET-NO-BORDER -->
+													                 </div><!-- END: DIV.col-lg-8 col-md-8 col-sm-6 col-xs-12 -->
+												              </div><!-- END: DIV.ROW -->
+										                 </div><!-- END: DIV.tab-pane fade in active -->
+									            </div><!-- END: DIV.tab-content -->
+									        </div><!-- END: DIV.tc-tabs -->
+								       </div><!-- END: DIV.col-lg-9 col-md-9 -->
+                                     							  
+													                </div><!-- END: DIV.ROW -->
+										                 </div><!-- END: DIV.tab-pane fade in active -->
+									            </div>						
                                              </div><!-- END: DIV.PANEL-BODY--> 
                          </div><!-- END: DIV.panel panel-default -->  
 				</div><!-- END: DIV.FORM-HORIZONTAL -->  

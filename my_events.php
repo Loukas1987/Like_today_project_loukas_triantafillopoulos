@@ -149,6 +149,8 @@ $(window).bind('resize orientationchange', function() {
                     <li><a href="add_event.php"><span class="fa fa-pencil-square-o"></span> <span class="xn-text">Καταχώρηση Συμβάντος</span></a></li>
 					<li class="xn-title"><center><span class="fa fa-info-circle"></span>     Πληροφόρηση Χρήστη</center></li>
 					<li><a href="my_events.php"><span class="fa fa-database"></span> <span class="xn-text">Οι Καταχωρήσεις μου</span></a></li>
+					<li><a href="index_quiz.php"><span class="fa fa-trophy"></span> <span class="xn-text">Quiz Ερωτήσεων</span></a></li>
+					
                                         <li><a href="map_search_of_user.php"><span class="fa fa-map-marker"></span> <span class="xn-text">Χαρτογράφηση των καταχωρήσεών μου</span></a></li>
                                         <li class="xn-title"><center><span class="fa fa-info-circle"></span>     Πληροφόρηση κάθε Επισκέπτη</center></li>
                                         
@@ -232,7 +234,7 @@ $monthName = date("F", mktime(0, 0, 0, $monthNum, 10)) ;
 
 if ($monthName == January){$monthName = 'Ιανουαρίου'; }
 if ($monthName == February){$monthName = 'Φεβρουαρίου'; }
-if ($monthName == Mars){$monthName = 'Μαρτίου'; }
+if ($monthName == March){$monthName = 'Μαρτίου'; }
 if ($monthName == April){$monthName = 'Απριλίου'; }
 if ($monthName == May){$monthName = 'Μαϊου'; }
 if ($monthName == June){$monthName = 'Ιουνίου'; }

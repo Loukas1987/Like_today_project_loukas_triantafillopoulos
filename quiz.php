@@ -15,7 +15,26 @@ require_once('config.php');
 		
 <style type="text/css">
 
+.btn-success:hover, .btn-success:focus, .btn-success.focus, .btn-success:active, .btn-success.active, .open>.dropdown-toggle.btn-success,.btn-success{
+-webkit-appearance: button;
+cursor: pointer;
+background-color: hsl(209, 21%, 25%);
+border-color: hsl(209, 21%, 25%);
+font-size: 12px;
+padding: 4px 15px;
+line-height: 20px;
+font-weight: 400;
+-moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+border-radius: 5px;
+-webkit-transition: all 200ms ease;
+-moz-transition: all 200ms ease;
+-ms-transition: all 200ms ease;
+-o-transition: all 200ms ease;
+transition: all 200ms ease;
+color: hsl(0, 100%, 100%);
 
+}
 .portlet {
 margin-bottom: 15px;
 border: none;
@@ -214,20 +233,27 @@ $(window).bind('resize orientationchange', function() {
 					$res = mysql_query("select * from event where CATEGORY='$category' ORDER BY RAND()") or die(mysql_error());
                     $rows = mysql_num_rows($res);
 					$i=1;
+					$b=rand(1,4);
+                    $c=rand(5,16);
+					$d=rand(-40,-1);
+					$a=array("0",$b,$c,$d);
+$random_keys=array_rand($a,4);
+
+
                 while($result=mysql_fetch_array($res)){?>
 
                     <?php if($i==1){?>  
                    <div id='question<?php echo $i;?>' class='cont'>
 				   <center><img class='questions' src="<?php echo htmlentities($result['IMAGE_SRC'], ENT_QUOTES, 'UTF-8'); ?>" width="300" height="300">
-<br></br>				   
-                    <p class='questions' id="qname<?php echo $i;?>"> <?php echo $i?>.<?php echo 'Πότε'.$result['TITLE_EVENT'];?></p>
-                    <input type="radio" value="1" id='radio1_<?php echo $result['ID_EVENT'];?>' name='<?php echo $result['YEAR'];?>'/><?php echo $result['YEAR'];?>
-                   <br/>
-                    <input type="radio" value="2" id='radio1_<?php echo $result['ID_EVENT'];?>' name='<?php echo $result['YEAR']-50;?>'/><?php echo $result['YEAR']-50;?>
+<br></br>		   
+                    <p class='questions' id="qname<?php echo $i;?>"> <?php echo $i?>.<?php echo 'Πότε έγινε '.$result['TITLE_EVENT'].';'?></p>
+                     <input type="radio" value="1" id='radio1_<?php echo $result['ID_EVENT'];?>' name='<?php echo $result['ID_EVENT'];?>'/><?php echo $result['YEAR']+$a[$random_keys[1]];?>
                     <br/>
-                    <input type="radio" value="3" id='radio1_<?php echo $result['ID_EVENT'];?>' name='<?php echo $result['YEAR']+222;?>'/><?php echo $result['YEAR']+222;?>
+                    <input type="radio" value="<?php echo $result['YEAR'];?>" id='radio1_<?php echo $result['ID_EVENT'];?>' name='<?php echo $result['ID_EVENT'];?>'/><?php echo $result['YEAR']+$a[$random_keys[4]];?>
                     <br/>
-                    <input type="radio" value="4" id='radio1_<?php echo $result['ID_EVENT'];?>' name='<?php echo $result['YEAR']+10;?>'/><?php echo $result['YEAR']+10;?>
+                    <input type="radio" value="3" id='radio1_<?php echo $result['ID_EVENT'];?>' name='<?php echo $result['ID_EVENT'];?>'/><?php echo $result['YEAR']+$a[$random_keys[2]];?>
+                    <br/>
+                    <input type="radio" value="4" id='radio1_<?php echo $result['ID_EVENT'];?>' name='<?php echo $result['ID_EVENT'];?>'/><?php echo $result['YEAR']+$a[$random_keys[3]];?>
                     <br/>
                     <input type="radio" checked='checked' style='display:none' value="5" id='radio1_<?php echo $result['ID_EVENT'];?>' name='<?php echo $result['ID_EVENT'];?>'/>                                                                      
                     <br/>
@@ -238,14 +264,14 @@ $(window).bind('resize orientationchange', function() {
                        <div id='question<?php echo $i;?>' class='cont'>
 					   <center><img class='questions' src="<?php echo htmlentities($result['IMAGE_SRC'], ENT_QUOTES, 'UTF-8'); ?>" width="300" height="300">
 					   <br></br>
-                    <p class='questions' id="qname<?php echo $i;?>"><?php echo $i?>.<?php echo 'Πότε '.$result['TITLE_EVENT'];?></p>
-                    <input type="radio" value="1" id='radio1_<?php echo $result['ID_EVENT'];?>' name='<?php echo $result['ID_EVENT'];?>'/><?php echo $result['YEAR']+200;?>
+                    <p class='questions' id="qname<?php echo $i;?>"> <?php echo $i?>.<?php echo 'Πότε έγινε '.$result['TITLE_EVENT'].';'?></p>
+                     <input type="radio" value="1" id='radio1_<?php echo $result['ID_EVENT'];?>' name='<?php echo $result['ID_EVENT'];?>'/><?php echo $result['YEAR']+$a[$random_keys[4]];?>
                     <br/>
-                    <input type="radio" value="2" id='radio1_<?php echo $result['ID_EVENT'];?>' name='<?php echo $result['ID_EVENT'];?>'/><?php echo $result['YEAR'];?>
+                    <input type="radio" value="<?php echo $result['YEAR'];?>" id='radio1_<?php echo $result['ID_EVENT'];?>' name='<?php echo $result['ID_EVENT'];?>'/><?php echo $result['YEAR']+$a[$random_keys[2]];?>
                     <br/>
-                    <input type="radio" value="3" id='radio1_<?php echo $result['ID_EVENT'];?>' name='<?php echo $result['ID_EVENT'];?>'/><?php echo $result['YEAR']-120;?>
+                    <input type="radio" value="3" id='radio1_<?php echo $result['ID_EVENT'];?>' name='<?php echo $result['ID_EVENT'];?>'/><?php echo $result['YEAR']+$a[$random_keys[1]];?>
                     <br/>
-                    <input type="radio" value="4" id='radio1_<?php echo $result['ID_EVENT'];?>' name='<?php echo $result['ID_EVENT'];?>'/><?php echo $result['YEAR']-200;?>
+                    <input type="radio" value="4" id='radio1_<?php echo $result['ID_EVENT'];?>' name='<?php echo $result['ID_EVENT'];?>'/><?php echo $result['YEAR']+$a[$random_keys[3]];?>
                     <br/>
                     <input type="radio" checked='checked' style='display:none' value="5" id='radio1_<?php echo $result['ID_EVENT'];?>' name='<?php echo $result['ID_EVENT'];?>'/>                                                                      
                     <br/>
@@ -257,18 +283,18 @@ $(window).bind('resize orientationchange', function() {
                     <div id='question<?php echo $i;?>' class='cont'>
                     <center><img class='questions' src="<?php echo htmlentities($result['IMAGE_SRC'], ENT_QUOTES, 'UTF-8'); ?>" width="300" height="300">
 					   <br></br>
-                    <p class='questions' id="qname<?php echo $i;?>"><?php echo $i?>.<?php echo 'Πότε '.$result['TITLE_EVENT'];?></p>
-                    <input type="radio" value="1" id='radio1_<?php echo $result['ID_EVENT'];?>' name='<?php echo $result['ID_EVENT'];?>'/><?php echo $result['YEAR']+200;?>
+                     <p class='questions' id="qname<?php echo $i;?>"> <?php echo $i?>.<?php echo 'Πότε έγινε '.$result['TITLE_EVENT'].';'?></p>
+                     <input type="radio" value="1" id='radio1_<?php echo $result['ID_EVENT'];?>' name='<?php echo $result['ID_EVENT'];?>'/><?php echo $result['YEAR']+$a[$random_keys[3]];?>
                     <br/>
-                    <input type="radio" value="2" id='radio1_<?php echo $result['ID_EVENT'];?>' name='<?php echo $result['ID_EVENT'];?>'/><?php echo $result['YEAR'];?>
+                    <input type="radio" value="<?php echo $result['YEAR'];?>" id='radio1_<?php echo $result['ID_EVENT'];?>' name='<?php echo $result['ID_EVENT'];?>'/><?php echo $result['YEAR']+$a[$random_keys[1]];?>
                     <br/>
-                    <input type="radio" value="3" id='radio1_<?php echo $result['ID_EVENT'];?>' name='<?php echo $result['ID_EVENT'];?>'/><?php echo $result['YEAR']-120;?>
+                    <input type="radio" value="3" id='radio1_<?php echo $result['ID_EVENT'];?>' name='<?php echo $result['ID_EVENT'];?>'/><?php echo $result['YEAR']+$a[$random_keys[4]];?>
                     <br/>
-                    <input type="radio" value="4" id='radio1_<?php echo $result['ID_EVENT'];?>' name='<?php echo $result['ID_EVENT'];?>'/><?php echo $result['YEAR']-200;?>
+                    <input type="radio" value="4" id='radio1_<?php echo $result['ID_EVENT'];?>' name='<?php echo $result['ID_EVENT'];?>'/><?php echo $result['YEAR']+$a[$random_keys[2]];?>
                     <br/>
                     <input type="radio" checked='checked' style='display:none' value="5" id='radio1_<?php echo $result['ID_EVENT'];?>' name='<?php echo $result['ID_EVENT'];?>'/>                                                                      
                     <br/>
-                  
+             
                     <button id='pre<?php echo $i;?>' class='previous btn btn-success' type='button'>Προηγούμενη</button>                    
                     <button id='next<?php echo $i;?>' class='next btn btn-success' type='submit'>Τέλος</button>
                     </div>
@@ -288,17 +314,18 @@ if(isset($_POST[1])){
    $keys=array_keys($_POST);
    $order=join(",",$keys);
 
-   //$query="select * from event id IN($order) ORDER BY FIELD(id,$order)";
+   $query="select * from event where YEAR IN($order) ORDER BY FIELD(YEAR,$order)";
   // echo $query;exit;
 
-   $response=mysql_query("select ID_EVENT,YEAR from event where ID_EVENT IN($order) ORDER BY FIELD(ID_EVENT,$order)")   or die(mysql_error());
+   $response=mysql_query("select * from event where ID_EVENT IN($order) ORDER BY FIELD(YEAR,$order)")   or die(mysql_error());
    $right_answer=0;
    $wrong_answer=0;
    $unanswered=0;
    while($result=mysql_fetch_array($response)){
-       if($result['ID_EVENT']==$_POST[$result['ID_EVENT']]){
+       if($result['YEAR']==$_POST[$result['ID_EVENT']]){
                $right_answer++;
-           }else if($_POST[$result['ID_EVENT']]==5){
+           }
+		   else if($_POST[$result['ID_EVENT']]==5){
                $unanswered++;
            }
            else{
